@@ -1,10 +1,10 @@
 <template>
-  <div id="app">
-    <TodoHeader></TodoHeader>
-    <TodoInput></TodoInput>
-    <TodoList></TodoList>
-    <TodoFooter></TodoFooter>
-  </div>
+    <div id="app">
+        <TodoHeader></TodoHeader>
+        <TodoInput v-on:addTodoItem="addOneItem"></TodoInput>
+        <TodoList :propsdata="todoItems" v-on:removeItem="removeOneItem" v-on:toggleItem="toggleOneItem"></TodoList>
+        <TodoFooter v-on:clearAll="clearAllItems"></TodoFooter>
+    </div>
 </template>
 
 <script>
@@ -14,12 +14,47 @@ import TodoList from './components/TodoList.vue';
 import TodoFooter from './components/TodoFooter.vue';
 
 export default {
-  components: {
-    'TodoHeader': TodoHeader,
-    'TodoInput': TodoInput,
-    'TodoList': TodoList,
-    'TodoFooter': TodoFooter
-  }
+    components: {
+        'TodoHeader': TodoHeader,
+        'TodoInput': TodoInput,
+        'TodoList': TodoList,
+        'TodoFooter': TodoFooter
+    },
+    data: function() {
+        return {
+        todoItems: [] //화면에 있는 todolist의 목록
+        }
+    },
+    methods: {
+        addOneItem: function(todoItem){
+            let obj = {completed: false, item: todoItem};
+            localStorage.setItem(todoItem, JSON.stringify(obj)); //localStorage에 있는 todolsit의 목록
+            this.todoItems.push(obj); //화면에 있는 목록과 LocaslStorage에 있는 목록 동기화
+        },
+        removeOneItem: function(todoItem, index){
+            localStorage.removeItem(todoItem.item);
+            this.todoItems.splice(index, 1);
+        },
+        toggleOneItem: function(todoItem, index){
+            this.todoItems[index].completed = !this.todoItems[index].completed
+            localStorage.removeItem(todoItem.item);
+            localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+        },
+        clearAllItems: function(){
+            localStorage.clear();
+            this.todoItems = [];
+        }
+    },
+    created: function(){
+        if(localStorage.length > 0){
+            for(let i=0; i<localStorage.length; i++){
+                if(localStorage.key(i) !== ''){
+                const item = JSON.parse(localStorage.getItem(localStorage.key(i)));
+                this.todoItems.push(item);
+                }
+            }
+        }
+    },
 }
 </script>
 
