@@ -3,24 +3,21 @@
         <div class="modal-mask">
             <div class="modal-wrapper">
                 <div class="modal-container">
+
+                  <!-- 모달헤더 -->
                     <div class="modal-header">
                       <slot name="header">
-                        default header
+                        헤더
                       </slot>
                     </div>
+
+                    <!-- 모달 바디 -->
                     <div class="modal-body">
                       <slot name="body">
-                        default body
+                        바디
                       </slot>
                     </div>
-                    <div class="modal-footer">
-                      <slot name="footer">
-                        default footer
-                        <button class="modal-default-button" @click="$emit('close')">
-                          OK
-                        </button>
-                      </slot>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -32,7 +29,6 @@ export default {
 }
 </script>
 <style scoped>
-
 .modal-mask {
   position: fixed;
   z-index: 9998;
