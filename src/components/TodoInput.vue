@@ -4,8 +4,13 @@
         <span class="addContainer" @click="addTodo">
             <i class="fa-solid fa-plus addBtn"></i>
         </span>
-        <ModalView v-if="showModal" @close="showModal = false">
-            <h3 slot="header">custom header</h3>
+        <ModalView v-if="showModal">
+            <h3 slot="header">
+                경고!
+                <i class="closeModalBtn fas fa-times" @click="showModal = false"></i>
+            </h3>
+            <div slot="body">무언가를 입력하세요.</div>
+            <!-- <div slot="footer">@sohyeon.kim</div> -->
         </ModalView>
     </div>
 </template>
@@ -15,7 +20,7 @@ export default {
     data : function(){
         return {
             newTodoItem: '',
-            showModal: true
+            showModal: false
         }
     },
     components: {
@@ -28,7 +33,7 @@ export default {
                 this.$emit('addTodoItem', this.newTodoItem);
                 this.clearInput();
             }else{
-                alert('null');
+                this.showModal = !this.showModal;
             }
         },
         clearInput: function(){
