@@ -19,7 +19,12 @@
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^8.0.3",
+    "prettier": "^2.7.1",
+    "sass": "^1.54.0",
+    "sass-loader": "^13.0.2",
     "vue-template-compiler": "^2.6.14"
   },
   "eslintConfig": {
@@ -29,12 +34,36 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "eslint:recommended"
+      "eslint:recommended",
+      "plugin:prettier/recommended",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
     ],
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "rules": {}
+    "rules": {
+      "vue/multi-word-component-names": [
+        "error",
+        {
+          "ignores": [
+            "default",
+            "Login"
+          ]
+        }
+      ],
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true,
+          "semi": true,
+          "useTabs": true,
+          "tabWidth": 2
+        }
+      ]
+    }
   },
   "browserslist": [
     "> 1%",

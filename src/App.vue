@@ -1,10 +1,10 @@
 <template>
-    <div id="app">
-        <TodoHeader></TodoHeader>
-        <TodoInput></TodoInput>
-        <TodoList></TodoList>
-        <TodoFooter></TodoFooter>
-    </div>
+	<div id="app">
+		<TodoHeader></TodoHeader>
+		<TodoInput></TodoInput>
+		<TodoList></TodoList>
+		<TodoFooter></TodoFooter>
+	</div>
 </template>
 
 <script>
@@ -15,28 +15,28 @@ import TodoFooter from './components/TodoFooter.vue';
 // import {mapGetters} from 'vuex';
 
 export default {
-    components: {
-        'TodoHeader': TodoHeader,
-        'TodoInput': TodoInput,
-        'TodoList': TodoList,
-        'TodoFooter': TodoFooter
-    },
-}
+	components: {
+		TodoHeader: TodoHeader,
+		TodoInput: TodoInput,
+		TodoList: TodoList,
+		TodoFooter: TodoFooter,
+	},
+};
 </script>
 
 <style>
-body{
-  text-align: center;
-  background-color: #F6F6F6;
+body {
+	text-align: center;
+	background-color: #f6f6f6;
 }
-input{
-  border-style: groove;
-  width: 200px;
+input {
+	border-style: groove;
+	width: 200px;
 }
 button {
-  border-style: groove;
+	border-style: groove;
 }
-.shadow{
-  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
+.shadow {
+	box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
 }
 </style>
