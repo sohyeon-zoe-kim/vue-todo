@@ -1,6 +1,6 @@
 <template>
 	<div class="inputBox shadow">
-		<input type="text" v-model="newTodoItem" @keyup.enter="addTodo()" />
+		<input type="text" v-model="newTodoItem" @keypress.enter="addTodo()" />
 		<span class="addContainer" @click="addTodo">
 			<i class="fa-solid fa-plus addBtn"></i>
 		</span>
@@ -10,27 +10,56 @@
 				<i class="closeModalBtn fas fa-times" @click="showModal = false"></i>
 			</h3>
 			<div slot="body">무언가를 입력하세요.</div>
-			<!-- <div slot="footer">@sohyeon.kim</div> -->
+		</ModalView>
+		<ModalView v-if="showDuplicate">
+			<h3 slot="header">
+				중복!
+				<i
+					class="closeModalBtn fas fa-times"
+					@click="showDuplicate = false"
+				></i>
+			</h3>
+			<div slot="body">
+				이미 리스트에 있는 내용입니다. 중복되지 않은 값을 입력하세요.
+			</div>
 		</ModalView>
 	</div>
 </template>
 <script>
 import ModalView from './common/ModalView.vue';
+import { mapGetters } from 'vuex';
 export default {
 	data: function () {
 		return {
 			newTodoItem: '',
 			showModal: false,
+			showDuplicate: false,
 		};
+	},
+	computed: {
+		...mapGetters({
+			todoItems: 'storedTodoItems',
+		}),
 	},
 	components: {
 		ModalView: ModalView,
 	},
 	methods: {
 		addTodo: function () {
-			if (this.newTodoItem !== '') {
+			const nowTodoItems = this.todoItems;
+
+			let checkDuplicate = false;
+			nowTodoItems.forEach((cur) => {
+				if (cur.item === this.newTodoItem) {
+					checkDuplicate = true;
+				}
+			});
+
+			if (this.newTodoItem !== '' && !checkDuplicate) {
 				this.$store.commit('addOneItem', this.newTodoItem);
 				this.clearInput();
+			} else if (checkDuplicate) {
+				this.showDuplicate = !this.showDuplicate;
 			} else {
 				this.showModal = !this.showModal;
 			}
